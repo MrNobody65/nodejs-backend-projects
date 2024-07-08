@@ -1,24 +1,27 @@
-const express = require('express')
-const path = require('path')
 require('dotenv').config()
+const express = require('express')
+const configViewEngine = require('./config/viewEngine')
+const webRoutes = require('./routes/web')
+const connection = require('./config/database.js')
 
 // import express from 'express'
 const app = express()
 const port = process.env.PORT || 8888
 const hostname = process.env.HOST_NAME
 
-// config template engine
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'ejs')
+//config template engine
+configViewEngine(app)
 
-app.get('/', (req, res) => {
-    // res.send('Hello World!')
-    res.render('sample.ejs')
-})
+// routes declaration
+app.use('/', webRoutes)
 
-app.get('/abc', (req, res) => {
-    res.send('Hello World! in /abc')
-})
+connection.query(
+    'SELECT * FROM users',
+    function (err, results, fields) {
+        console.log(results)
+        console.log(fields)
+    }
+)
 
 app.listen(port, hostname, () => {
     console.log(`Example app listening on port ${port}`)

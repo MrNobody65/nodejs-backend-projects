@@ -6,10 +6,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon src/server.js"
   },
-  "keywords": [
-    "nodejs",
-    "react"
-  ],
   "author": "MrNobody65",
   "license": "ISC",
   "description": "",
